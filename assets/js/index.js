@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 
-const startQuestion = () => {
+const menuQuestion = () => {
   return inquirer.prompt([
     {
       type: "list",
@@ -14,6 +14,39 @@ const startQuestion = () => {
       default: 0,
     },
   ]);
+};
+const startQuest = () => {
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "What is the name of the Team Manager(0-30 char)?",
+    },
+    {
+      type: "number",
+      name: "Employee_id",
+      message: "What is the Team Managers's employee id?",
+    },
+    {
+      type: "email",
+      name: "email",
+      message: "What is the email address of the Team Manager?",
+    },
+    {
+      type: "number",
+      name: "office_number",
+      message: "What is the office number of the Team Manager?",
+    },
+  ]);
+};
+const startProfiles = async () => {
+  await startQuest()
+    .then(function (answers) {
+      //TODO: run function to add team manager info to HTML
+      console.log("Team Manager, " + answers.name + ", was added.");
+    })
+    .catch((err) => console.error(err));
+    menu();
 };
 
 const addEngineerQuest = () => {
@@ -89,7 +122,7 @@ const addIntern = async () => {
 };
 
 const menu = () => {
-  startQuestion()
+  menuQuestion()
     //   // Use writeFile ;method imported from fs.promises to use promises instead of
     //   // a callback function
     .then(function (answers) {
@@ -113,8 +146,7 @@ const menu = () => {
 const init = () => {
     //TODO: inquiries to get manager info before start team building
     //write to HTML file
-  
-  menu();
+  startProfiles();
 };
 
 init();
