@@ -1,4 +1,11 @@
 const inquirer = require("inquirer");
+const { writeFile } = require("fs").promises;
+const { appendFile } = require("fs").promises;
+const GenerateHTML = require("./generateHTML");
+
+//make a GeneratHTML object
+const gHTML = new GenerateHTML();
+
 
 const menuQuestion = () => {
   return inquirer.prompt([
@@ -24,7 +31,7 @@ const startQuest = () => {
     },
     {
       type: "number",
-      name: "Employee_id",
+      name: "employee_id",
       message: "What is the Team Managers's employee id?",
     },
     {
@@ -41,11 +48,24 @@ const startQuest = () => {
 };
 const startProfiles = async () => {
   await startQuest()
-    .then(function (answers) {
-      //TODO: run function to add team manager info to HTML
-      console.log("Team Manager, " + answers.name + ", was added.");
+    .then((answers) => {
+      writeFile(
+        "TeamProfiles.HTML",
+        gHTML.generateHTMLManager(
+          answers.name,
+          answers.employee_id,
+          answers.email,
+          answers.office_number
+        )
+      );
     })
+    .then(() => console.log("Team Manager, " + answers.name + ", was added to HTML."))
     .catch((err) => console.error(err));
+    // .then(function (answers) {
+    //   //TODO: run function to add team manager info to HTML
+    //   console.log("Team Manager, " + answers.name + ", was added.");
+    // })
+    // .catch((err) => console.error(err));
     menu();
 };
 
@@ -58,7 +78,7 @@ const addEngineerQuest = () => {
     },
     {
       type: "number",
-      name: "Employee_id",
+      name: "employee_id",
       message: "What is the Engineer's employee id?",
     },
     {
@@ -75,14 +95,20 @@ const addEngineerQuest = () => {
 };
 const addEngineer = async () => {
   await addEngineerQuest()
-    .then(function (answers) {
-      //TODO: run function to add Engineer to HTML
-      console.log(
-        "Engineer, " +
-          answers.name +
-          ", was added."
+    .then((answers) => {
+      appendFile(
+        "TeamProfiles.HTML",
+        gHTML.generateHTMLEngineer(
+          answers.name,
+          answers.employee_id,
+          answers.email,
+          answers.gitHub
+        )
       );
     })
+    .then(() =>
+      console.log("Engineer, " + answers.name + ", was added to HTML.")
+    )
     .catch((err) => console.error(err));
   menu();
 };
@@ -96,7 +122,7 @@ const addInternQuest = () => {
     },
     {
       type: "number",
-      name: "Employee_id",
+      name: "employee_id",
       message: "What is the Interns's employee id?",
     },
     {
@@ -113,10 +139,20 @@ const addInternQuest = () => {
 };
 const addIntern = async () => {
   await addInternQuest()
-    .then(function (answers) {
-      //TODO: run function to add Intern to HTML
-      console.log("Intern, " + answers.name + ", was added.");
+    .then((answers) => {
+      appendFile(
+        "TeamProfiles.HTML",
+        gHTML.generateHTMLIntern(
+          answers.name,
+          answers.employee_id,
+          answers.email,
+          answers.school
+        )
+      );
     })
+    .then(() =>
+      console.log("Intern, " + answers.name + ", was added to HTML.")
+    )
     .catch((err) => console.error(err));
   menu();
 };
@@ -143,9 +179,7 @@ const menu = () => {
     .catch((err) => console.error(err));
 };
 
-const init = () => {
-    //TODO: inquiries to get manager info before start team building
-    //write to HTML file
+const init = () => { 
   startProfiles();
 };
 
