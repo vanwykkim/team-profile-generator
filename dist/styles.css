@@ -1,6 +1,7 @@
-/* body {
-  background-color: aliceblue;
-} */
+.main {
+  display: flex;
+  flex-wrap: wrap;
+}
 .header{
     background-color: blueviolet;
     color:white;
@@ -16,8 +17,7 @@
 }
 .card {
     margin: 20px;
-    max-height: 500px;
-    max-width: 250px;
+    min-width: 20%;
 }
 .cardBody{
     background-color: beige;
