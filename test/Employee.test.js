@@ -1,40 +1,41 @@
-const { Employee, Manager, Engineer, Intern } = require("./lib/employee");
+const {Employee} = require("../lib/employee");
 
 describe("Employee", () => {
   describe("Initialization", () => {
-    it("should return an object containing a 'name' property when called with the 'new' keyword", () => {
+    it("should return an object containing 'name, id, email' properties when called with the 'new' keyword", () => {
       const obj = new Employee();
 
       expect("name" in obj).toEqual(true);
+      expect("id" in obj).toEqual(true);
+      expect("email" in obj).toEqual(true);
     });
 
     it("should set 'name' when created", () => {
       const eName = "John Smith";
+      const id = 4;
+      const email = "Who@you.com";
 
-      const obj = new Employee(eName);
+      const obj = new Employee(eName, id, email);
 
       expect(obj.name).toEqual(eName);
+      expect(obj.id).toEqual(id);
+      expect(obj.email).toEqual(email);
     });
   });
 });
 
-//   describe("plus", () => {
-//     it("should return a new 'Arithmetic' object", () => {
-//       const obj = new Arithmetic(3).plus(3);
 
-//       expect(obj instanceof Arithmetic).toEqual(true);
-//     });
-
-//     it("should return a new 'Arithmetic' object that has an updated 'number' value", () => {
-//       const num = 8;
-//       const added = 7;
-//       const sum = num + added;
-
-//       const { number } = new Arithmetic(num).plus(added);
-
-//       expect(number).toEqual(sum);
-//     });
-//   });
+  test("Getters for Employee", () => {
+    const myEmployee = new Employee("Frank", 4, "frank@hotmail.com");
+    const myName = myEmployee.getName();
+    const myId = myEmployee.getId();
+    const myEmail = myEmployee.getEmail();
+    const myRole = myEmployee.getRole();
+    expect(myName).toEqual("Frank");
+    expect(myId).toEqual(4);
+    expect(myEmail).toEqual("frank@hotmail.com");
+    expect(myRole).toEqual("Employee");
+    });
 
 //   describe("minus", () => {
 //     it("should return a new 'Arithmetic' object", () => {
