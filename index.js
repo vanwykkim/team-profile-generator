@@ -1,11 +1,10 @@
 const inquirer = require("inquirer");
-const { writeFile } = require("fs").promises;
-const { appendFile } = require("fs").promises;
-const GenerateHTML = require("./generateHTML");
+const { writeFile, appendFile } = require("fs").promises;
+//const { appendFile } = require("fs").promises;
+const GenerateHTML = require("./src/generateHTML");
 
 //make a GeneratHTML object
 const gHTML = new GenerateHTML();
-
 
 const menuQuestion = () => {
   return inquirer.prompt([
@@ -50,7 +49,7 @@ const startProfiles = async () => {
   await startQuest()
     .then((answers) => {
       writeFile(
-        "TeamProfiles.HTML",
+        "./dist/TeamProfiles.HTML",
         gHTML.generateHTMLManager(
           answers.name,
           answers.employee_id,
@@ -68,6 +67,13 @@ const startProfiles = async () => {
     // .catch((err) => console.error(err));
     menu();
 };
+
+//close the body and HTML tags
+const endProfiles = async () => {
+  await appendFile("./dist/TeamProfiles.HTML", gHTML.generateHTMLEnd())
+  .then(() => console.log("HTML file complete."))
+    .catch((err) => console.error(err));
+}
 
 const addEngineerQuest = () => {
   return inquirer.prompt([
@@ -97,7 +103,7 @@ const addEngineer = async () => {
   await addEngineerQuest()
     .then((answers) => {
       appendFile(
-        "TeamProfiles.HTML",
+        "./dist/TeamProfiles.HTML",
         gHTML.generateHTMLEngineer(
           answers.name,
           answers.employee_id,
@@ -141,7 +147,7 @@ const addIntern = async () => {
   await addInternQuest()
     .then((answers) => {
       appendFile(
-        "TeamProfiles.HTML",
+        "./dist/TeamProfiles.HTML",
         gHTML.generateHTMLIntern(
           answers.name,
           answers.employee_id,
@@ -165,7 +171,8 @@ const menu = () => {
       switch (answers.menuChoice) {
         case "Finish Building Team":
           console.log("Thanks for using the team profile generator");
-          //TODO: function to display the HTML
+          //TODO: function to finish the HTML
+          endProfiles();
           break;
         case "Add an Engineer":
           addEngineer();
