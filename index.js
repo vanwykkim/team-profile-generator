@@ -46,8 +46,7 @@ const startQuest = () => {
   ]);
 };
 const startProfiles = async () => {
-  await startQuest()
-    .then((answers) => {
+  await startQuest().then(function(answers){
       writeFile(
         "./dist/TeamProfiles.HTML",
         gHTML.generateHTMLManager(
@@ -57,14 +56,10 @@ const startProfiles = async () => {
           answers.office_number
         )
       );
+      return answers;
     })
-    .then(() => console.log("Team Manager, " + answers.name + ", was added to HTML."))
+    .then((answers) => console.log("Team Manager, " + answers.name + ", was added to HTML."))
     .catch((err) => console.error(err));
-    // .then(function (answers) {
-    //   //TODO: run function to add team manager info to HTML
-    //   console.log("Team Manager, " + answers.name + ", was added.");
-    // })
-    // .catch((err) => console.error(err));
     menu();
 };
 
@@ -111,8 +106,9 @@ const addEngineer = async () => {
           answers.gitHub
         )
       );
+      return answers;
     })
-    .then(() =>
+    .then((answers) =>
       console.log("Engineer, " + answers.name + ", was added to HTML.")
     )
     .catch((err) => console.error(err));
@@ -155,8 +151,9 @@ const addIntern = async () => {
           answers.school
         )
       );
+      return answers;
     })
-    .then(() =>
+    .then((answers) =>
       console.log("Intern, " + answers.name + ", was added to HTML.")
     )
     .catch((err) => console.error(err));
@@ -182,7 +179,6 @@ const menu = () => {
           break;
       }
     })
-    //   .then(put function here to use this)
     .catch((err) => console.error(err));
 };
 

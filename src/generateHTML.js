@@ -21,19 +21,20 @@ GenerateHTML.prototype.generateHTMLManager = function (
   </head>
   <body>
  <div class="header">
- <h1>my Team</h1>
+    <h1>my Team</h1>
  </div>
-<div class="card">
-<div class="cardHeader">
-<h3>${manager.getRole()}</h3>
-<h3> ${manager.getName()} </h3>
-</div>
-<div class="cardBody"> 
-<p> Employee id: ${manager.getId()}</p>
-<p><a href="mailto:${manager.getEmail()}">Email: ${manager.getEmail()}</a></p>
-<p> Office number: ${manager.getOffice()}</p>
-</div>
-</div>
+ <div class="main">
+  <div class="card">
+    <div class="cardHeader">
+      <h3>${manager.getRole()}</h3>
+      <h3> ${manager.getName()} </h3>
+    </div>
+    <div class="cardBody"> 
+      <p> Employee id: ${manager.getId()}</p>
+      <p><a href="mailto:${manager.getEmail()}">Email: ${manager.getEmail()}</a></p>
+      <p> Office number: ${manager.getOffice()}</p>
+    </div>
+  </div>
 `;
 };
 
@@ -80,6 +81,13 @@ GenerateHTML.prototype.generateHTMLIntern = function (
       <p>School: ${intern.getSchool()}</p>
     </div>
   </div>
+  `;
+};
+
+GenerateHTML.prototype.generateHTMLEnd = function (){
+  return `
+  </div>>
+  </body>
   `;
 };
 
